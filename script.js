@@ -1,3 +1,5 @@
+const gallery = document.getElementById("gallery");
+
 const products = [
   { folder: "jersey", prefix: "j", total: 468 },
   { folder: "polo", prefix: "p", total: 58 },
@@ -5,71 +7,73 @@ const products = [
   { folder: "gymshirt", prefix: "g", total: 16 }
 ];
 
-const gallery = document.getElementById("gallery");
-
-/* ---------- CREATE GALLERY ---------- */
-products.forEach(cat => {
-  const section = document.createElement("section");
-  section.className = "category";
-  section.dataset.category = cat.folder;
-
+// CREATE GALLERY
+products.forEach(item => {
   const title = document.createElement("h2");
-  title.textContent = cat.folder.toUpperCase();
-  section.appendChild(title);
+  title.className = "section-title";
+  title.textContent = item.folder.toUpperCase();
+  title.dataset.category = item.folder;
+  gallery.appendChild(title);
 
   const grid = document.createElement("div");
   grid.className = "grid";
+  grid.dataset.category = item.folder;
 
-  for(let i=1;i<=cat.total;i++){
+  for (let i = 1; i <= item.total; i++) {
     const img = document.createElement("img");
-    img.src = `images/${cat.folder}/${cat.prefix}(${i}).jpg`;
-    img.alt = `${cat.folder} design ${i}`;
+    img.dataset.src = `images/${item.folder}/${item.prefix}(${i}).jpg`;
+    img.alt = `${item.folder} design ${i}`;
     img.loading = "lazy";
-
-    img.addEventListener("click",()=>openLightbox(img.src));
-
-    observer.observe(img);
     grid.appendChild(img);
   }
 
-  section.appendChild(grid);
-  gallery.appendChild(section);
+  gallery.appendChild(grid);
 });
 
-/* ---------- FILTER ---------- */
-document.querySelectorAll(".nav button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+// FILTER
+document.querySelectorAll(".filters button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
 
     const filter = btn.dataset.filter;
-    document.querySelectorAll(".category").forEach(cat=>{
-      cat.style.display = (filter==="all" || cat.dataset.category===filter)
-        ? "block"
-        : "none";
+    document.querySelectorAll("[data-category]").forEach(el => {
+      el.style.display = filter === "all" || el.dataset.category === filter ? "" : "none";
     });
   });
 });
 
-/* ---------- LIGHTBOX ---------- */
+// LIGHTBOX
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 
-function openLightbox(src){
-  lightboxImg.src = src;
-  lightbox.style.display="flex";
-}
-
-lightbox.addEventListener("click",()=>{
-  lightbox.style.display="none";
+gallery.addEventListener("click", e => {
+  if (e.target.tagName === "IMG") {
+    lightboxImg.src = e.target.src;
+    lightbox.style.display = "flex";
+  }
 });
 
-/* ---------- INTERSECTION OBSERVER ---------- */
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-      observer.unobserve(entry.target);
+lightbox.addEventListener("click", () => {
+  lightbox.style.display = "none";
+});
+
+// INTERSECTION OBSERVER
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      img.src = img.dataset.src;
+      observer.unobserve(img);
     }
   });
-},{threshold:0.1});
+});
+
+document.querySelectorAll("img[data-src]").forEach(img => observer.observe(img));
+
+// INTRO REVEAL
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.querySelectorAll(".hidden").forEach(el => el.classList.add("show"));
+  }, 2600);
+});

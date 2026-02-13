@@ -1,41 +1,44 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>PP SPORT DESIGN | Sportwear Portfolio</title>
-
-  <!-- SEO -->
-  <meta name="description" content="PP SPORT DESIGN – Luxury Sportwear Portfolio. Jersey, Polo, Ordination Shirt, Gym Shirt" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>PP SPORT DESIGN | Luxury Sportwear Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Luxury sportwear portfolio – Jersey, Polo, Ordination Shirt, Gym Shirt">
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- HERO -->
-  <header class="hero">
+<!-- INTRO ANIMATION -->
+<div id="intro">
+  <img src="images/logo.png" class="intro-logo" alt="PP Sport Design Logo">
+  <h1>PP SPORT DESIGN</h1>
+</div>
+
+<header class="hero hidden">
+  <div class="brand">
+    <img src="images/logo.png" class="logo" alt="PP Sport Design Logo">
     <h1>PP SPORT DESIGN</h1>
-    <p>Luxury Sportwear Portfolio</p>
-
-    <nav class="nav">
-      <button data-filter="all" class="active">All</button>
-      <button data-filter="jersey">Jersey</button>
-      <button data-filter="polo">Polo</button>
-      <button data-filter="ordinationshirt">Ordination Shirt</button>
-      <button data-filter="gymshirt">Gym Shirt</button>
-    </nav>
-  </header>
-
-  <!-- GALLERY -->
-  <main id="gallery"></main>
-
-  <!-- LIGHTBOX -->
-  <div id="lightbox">
-    <img id="lightbox-img" />
   </div>
+  <p>Luxury Sportwear Portfolio</p>
 
-  <!-- JS -->
-  <script src="script.js"></script>
+  <div class="filters">
+    <button data-filter="all" class="active">All</button>
+    <button data-filter="jersey">Jersey</button>
+    <button data-filter="polo">Polo</button>
+    <button data-filter="ordinationshirt">Ordination Shirt</button>
+    <button data-filter="gymshirt">Gym Shirt</button>
+  </div>
+</header>
+
+<main id="gallery" class="hidden"></main>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <img id="lightbox-img">
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
