@@ -1,31 +1,62 @@
+const products = [
+  { name: "Jersey", folder: "jersey", prefix: "j", total: 468 },
+  { name: "Polo", folder: "polo", prefix: "p", total: 58 },
+  { name: "Ordination Shirt", folder: "ordinationshirt", prefix: "o", total: 14 },
+  { name: "Gym Shirt", folder: "gymshirt", prefix: "g", total: 16 }
+];
+
 const gallery = document.getElementById("gallery");
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightbox-img");
+const filters = document.getElementById("filters");
 
-const images = {
-    jersey: ["j(1).jpg", "j(2).jpg"],
-    polo: ["p(1).jpg", "p(2).jpg"],
-    ordinationshirt: ["o(1).jpg", "o(2).jpg"],
-    gymshirt: ["g(1).jpg", "g(2).jpg"]
-};
+products.forEach((item, index) => {
+  // Filter button
+  const btn = document.createElement("button");
+  btn.textContent = item.name;
+  if (index === 0) btn.classList.add("active");
+  btn.onclick = () => showCategory(item.folder, btn);
+  filters.appendChild(btn);
 
-function showGallery(category) {
-    gallery.innerHTML = "";
+  // Section
+  const section = document.createElement("section");
+  section.id = item.folder;
+  if (index !== 0) section.style.display = "none";
 
-    images[category].forEach(img => {
-        const image = document.createElement("img");
-        image.src = `images/${category}/${img}`;
-        image.onclick = () => {
-            lightbox.style.display = "flex";
-            lightboxImg.src = image.src;
-        };
-        gallery.appendChild(image);
-    });
+  const title = document.createElement("h2");
+  title.textContent = item.name;
+  section.appendChild(title);
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+
+  for (let i = 1; i <= item.total; i++) {
+    const img = document.createElement("img");
+    img.src = `images/${item.folder}/${item.prefix}(${i}).jpg`;
+    img.loading = "lazy";
+    img.onclick = () => openLightbox(img.src);
+    grid.appendChild(img);
+  }
+
+  section.appendChild(grid);
+  gallery.appendChild(section);
+});
+
+function showCategory(id, button) {
+  document.querySelectorAll("section").forEach(s => s.style.display = "none");
+  document.getElementById(id).style.display = "block";
+
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+  button.classList.add("active");
 }
 
-lightbox.onclick = () => {
-    lightbox.style.display = "none";
-};
+/* Lightbox */
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const close = document.getElementById("close");
 
-// โหลดหมวดแรก
-showGallery("football");
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.style.display = "flex";
+}
+
+close.onclick = () => lightbox.style.display = "none";
+lightbox.onclick = e => e.target === lightbox && (lightbox.style.display = "none");

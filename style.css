@@ -1,89 +1,98 @@
 * {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
 }
 
 body {
-background: radial-gradient(circle, #111 0%, #000 100%);
-color: white;
+  background: #111;
+  color: #fff;
 }
 
 header {
-text-align: center;
-padding: 50px 20px;
-border-bottom: 2px solid #222;
+  text-align: center;
+  padding: 30px 10px;
 }
 
 header h1 {
-font-size: 42px;
-letter-spacing: 5px;
+  font-size: 2rem;
+  letter-spacing: 2px;
 }
 
 header p {
-color: #aaa;
-margin-top: 8px;
+  opacity: 0.7;
 }
 
+/* Filter buttons */
 nav {
-margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 20px;
 }
 
 nav button {
-background: transparent;
-border: 2px solid #ffcc00;
-color: #ffcc00;
-padding: 10px 20px;
-margin: 5px;
-cursor: pointer;
-font-weight: bold;
-transition: 0.3s;
+  padding: 8px 16px;
+  border: none;
+  background: #222;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 20px;
 }
 
-nav button:hover {
-background: #ffcc00;
-color: black;
+nav button.active {
+  background: #ff3c00;
 }
 
-.gallery {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-gap: 18px;
-padding: 30px;
+/* Gallery */
+section {
+  padding: 20px;
 }
 
-.gallery img {
-width: 100%;
-border-radius: 12px;
-cursor: pointer;
-transition: 0.3s;
+section h2 {
+  margin-bottom: 15px;
+  text-transform: uppercase;
 }
 
-.gallery img:hover {
-transform: scale(1.06);
-box-shadow: 0 0 20px rgba(255,204,0,0.5);
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
 }
 
+.grid img {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.grid img:hover {
+  transform: scale(1.03);
+}
+
+/* Lightbox */
 #lightbox {
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.9);
-display: none;
-justify-content: center;
-align-items: center;
-z-index: 10;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
 #lightbox img {
-max-width: 90%;
-max-height: 90%;
-border-radius: 10px;
+  max-width: 95%;
+  max-height: 95%;
 }
 
-footer {
-text-align: center;
-padding: 25px;
-color: #777;
-border-top: 1px solid #222;
+#close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  cursor: pointer;
 }
