@@ -1,59 +1,26 @@
-/* SOUND */
-window.addEventListener("click",()=>{
-  const sound=document.getElementById("hit-sound");
-  sound.volume=0.3;
-  sound.play();
-},{once:true});
-
-/* GALLERY DATA */
-const products=[
-{folder:"jersey",prefix:"j",total:468},
-{folder:"polo",prefix:"p",total:58},
-{folder:"ordinationshirt",prefix:"o",total:14},
-{folder:"gymshirt",prefix:"g",total:16}
-];
-
-const gallery=document.getElementById("gallery");
-
-/* LOAD GALLERY */
-products.forEach(item=>{
-  const title=document.createElement("h2");
-  title.textContent=item.folder.toUpperCase();
-  title.style.padding="40px 40px 0";
-  title.style.color="#d4af37";
-  gallery.appendChild(title);
-
-  const grid=document.createElement("div");
-  grid.className="grid";
-
-  for(let i=1;i<=item.total;i++){
-    const img=document.createElement("img");
-    img.src=`images/${item.folder}/${item.prefix}(${i}).jpg`;
-    img.loading="lazy";
-    grid.appendChild(img);
-
-    img.onclick=()=>{
-      document.getElementById("lightbox").style.display="flex";
-      document.getElementById("lightbox-img").src=img.src;
-    };
-  }
-  gallery.appendChild(grid);
+/* CURSOR */
+const cursor=document.querySelector(".cursor");
+document.addEventListener("mousemove",e=>{
+  cursor.style.left=e.clientX+"px";
+  cursor.style.top=e.clientY+"px";
 });
 
-/* LIGHTBOX CLOSE */
-document.getElementById("lightbox").onclick=()=>{
-  document.getElementById("lightbox").style.display="none";
-};
+/* PARALLAX */
+window.addEventListener("scroll",()=>{
+  const logo=document.querySelector(".logo");
+  if(logo) logo.style.transform=`translateY(${scrollY*0.25}px)`;
+});
 
-/* SCROLL ANIMATION */
-const observer=new IntersectionObserver(entries=>{
+/* LAZY LOAD (FAST) */
+const io=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
-      e.target.classList.add("show");
+      const img=e.target;
+      img.src=img.dataset.src;
+      img.onload=()=>img.classList.add("loaded");
+      io.unobserve(img);
     }
   });
-},{threshold:0.2});
+},{rootMargin:"200px"});
 
-setTimeout(()=>{
-  document.querySelectorAll(".grid img").forEach(img=>observer.observe(img));
-},2000);
+document.querySelectorAll("img[data-src]").forEach(img=>io.observe(img));

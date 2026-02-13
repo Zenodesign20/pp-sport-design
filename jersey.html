@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Jersey Collection</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a href="index.html" class="back">← HOME</a>
+<h2 class="title">JERSEY COLLECTION</h2>
+
+<div class="grid gallery" id="gallery"></div>
+
+<div class="cursor"></div>
+<script src="script.js"></script>
+
+<script>
+const gallery = document.getElementById("gallery");
+for(let i=1;i<=468;i++){
+  const img = document.createElement("img");
+  img.dataset.src = `images/jersey/j(${i}).jpg`;
+  img.alt = `Jersey ${i}`;
+  gallery.appendChild(img);
+}
+</script>
+</body>
+</html>

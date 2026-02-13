@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Polo Collection</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<a href="index.html" class="back">← HOME</a>
+<h1 class="title section">POLO COLLECTION</h1>
+
+<section class="gallery section" id="gallery"></section>
+
+<script>
+const gallery = document.getElementById("gallery");
+for(let i=1;i<=58;i++){
+  const img=document.createElement("img");
+  img.src=`images/polo/p(${i}).jpg`;
+  img.alt=`polo ${i}`;
+  gallery.appendChild(img);
+}
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
